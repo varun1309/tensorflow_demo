@@ -3,6 +3,7 @@
 """Functions for downloading and reading MNIST data."""
 import gzip
 import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from six.moves.urllib.request import urlretrieve
 import numpy
 SOURCE_URL = 'http://yann.lecun.com/exdb/mnist/'
@@ -22,7 +23,7 @@ def maybe_download(filename, work_directory):
 
 def _read32(bytestream):
     dt = numpy.dtype(numpy.uint32).newbyteorder('>')
-    return numpy.frombuffer(bytestream.read(4), dtype=dt)
+    return numpy.frombuffer(bytestream.read(4), dtype=dt)[0]
 
 
 def extract_images(filename):
